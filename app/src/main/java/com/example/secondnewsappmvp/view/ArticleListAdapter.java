@@ -13,18 +13,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.secondnewsappmvp.R;
 import com.example.secondnewsappmvp.model.ArticlesItem;
-import com.example.secondnewsappmvp.network.ApiClient;
 
 import java.util.List;
 
 public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.MyViewHolder> {
 
+    private final RecyclerViewInterface recyclerViewInterface;
     private final List<ArticlesItem> articlesItemList;
     private final Context context;
 
-    public ArticleListAdapter(List<ArticlesItem> articlesItemList, Context context) {
+    public ArticleListAdapter(List<ArticlesItem> articlesItemList, Context context,
+                              RecyclerViewInterface recyclerViewInterface) {
         this.articlesItemList = articlesItemList;
         this.context = context;
+        this.recyclerViewInterface = recyclerViewInterface;
     }
 
     @NonNull
@@ -33,7 +35,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_movie_list, parent, false);
 
-        return new MyViewHolder(view);
+        return new MyViewHolder(view, recyclerViewInterface);
 
     }
 
@@ -60,7 +62,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         ImageView ivMovie;
         TextView tvMovietitle, tvReleaseDate, tvOverview;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
             super(itemView);
 
             ivMovie = itemView.findViewById(R.id.ivMovie);
@@ -68,6 +70,18 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             tvReleaseDate = itemView.findViewById(R.id.tvReleaseMovie);
             tvOverview = itemView.findViewById(R.id.tvOverviewMovie);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (recyclerViewInterface != null) {
+                        int position = getAdapterPosition();
+
+                        if (position != RecyclerView.NO_POSITION) {
+                            recyclerViewInterface.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 

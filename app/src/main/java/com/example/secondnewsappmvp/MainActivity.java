@@ -1,5 +1,7 @@
 package com.example.secondnewsappmvp;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,11 +20,12 @@ import com.example.secondnewsappmvp.contract.ArticleListContract;
 import com.example.secondnewsappmvp.model.ArticlesItem;
 import com.example.secondnewsappmvp.presenter.ArticlesPresenter;
 import com.example.secondnewsappmvp.view.ArticleListAdapter;
+import com.example.secondnewsappmvp.view.RecyclerViewInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ArticleListContract.View {
+public class MainActivity extends AppCompatActivity implements ArticleListContract.View, RecyclerViewInterface {
 
     private RecyclerView rvMovieList;
     private List<ArticlesItem> movieList;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
 
         ArticlesPresenter moviePresenter = new ArticlesPresenter(this);
         moviePresenter.requestDataFromServer();
+
 
     }
 
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
     public void setDataToRecyclerview(List<ArticlesItem> movieListArray) {
 
         movieList.addAll(movieListArray);
-        ArticleListAdapter movieListAdapter = new ArticleListAdapter(movieList, MainActivity.this);
+        ArticleListAdapter movieListAdapter = new ArticleListAdapter(movieList, MainActivity.this, this);
         rvMovieList.setAdapter(movieListAdapter);
 
     }
@@ -94,5 +98,13 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
         Log.e("ERROR:", throwable.getMessage());
         Toast.makeText(MainActivity.this, "Error in getting data", Toast.LENGTH_LONG).show();
 
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+        intent.putExtra("url", movieList.get(position).getUrl());
+        startActivity(intent);
     }
 }
