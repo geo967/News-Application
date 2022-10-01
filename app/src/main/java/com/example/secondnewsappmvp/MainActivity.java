@@ -1,14 +1,18 @@
 package com.example.secondnewsappmvp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secondnewsappmvp.contract.ArticleListContract;
 import com.example.secondnewsappmvp.model.ArticlesItem;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
     private RecyclerView rvMovieList;
     private List<ArticlesItem> movieList;
     private ProgressBar pbLoading;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,28 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
         ArticlesPresenter moviePresenter = new ArticlesPresenter(this);
         moviePresenter.requestDataFromServer();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.item1:
+                Toast.makeText(getApplicationContext(), "Item 1 Selected", Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item2:
+                Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
