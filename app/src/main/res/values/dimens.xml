@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--ProgressBar-->
+    <dimen name="progress_bar_width">50dp</dimen>
+    <dimen name="progress_bar_height">50dp</dimen>
+
+    <!--Card view -->
+    <dimen name="card_corner_radius">50dp</dimen>
+    <dimen name="card_corner_elevation">10dp</dimen>
+    <dimen name="card_margin_vertical">10dp</dimen>
+    <dimen name="card_margin_horizontal">10dp</dimen>
+
+    <dimen name="linear_layout_padding">10dp</dimen>
+    <dimen name="linear_layout_margin_start">10dp</dimen>
+    <dimen name="image_view_height">300dp</dimen>
+
+    <!--Text views-->
+    <dimen name="text_size">20sp</dimen>
+    <dimen name="text_size_sub_items">16sp</dimen>
+    <dimen name="text_margin_top">10dp</dimen>
+</resources>

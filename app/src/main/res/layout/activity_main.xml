@@ -16,15 +16,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMovieList"
+            android:id="@+id/articleListRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ProgressBar
-            android:id="@+id/pbLoading"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center" />
-
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/recyclerViewLoading"
+        android:layout_width="@dimen/progress_bar_width"
+        android:layout_height="@dimen/progress_bar_height"
+        android:layout_gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
