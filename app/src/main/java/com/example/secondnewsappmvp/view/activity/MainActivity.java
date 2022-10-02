@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp.view.adapter.activity;
+package com.example.secondnewsappmvp.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secondnewsappmvp.R;
-import com.example.secondnewsappmvp.contract.ArticleListContract;
 import com.example.secondnewsappmvp.data.model.ArticlesItem;
-import com.example.secondnewsappmvp.presenter.ArticlesPresenter;
+import com.example.secondnewsappmvp.domain.contract.ArticleListContract;
+import com.example.secondnewsappmvp.domain.presenter.ArticlesPresenter;
 import com.example.secondnewsappmvp.view.adapter.ArticleListAdapter;
 import com.example.secondnewsappmvp.view.adapter.RecyclerViewInterface;
 

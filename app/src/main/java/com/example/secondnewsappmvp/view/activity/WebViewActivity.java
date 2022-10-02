@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp.view.adapter.activity;
+package com.example.secondnewsappmvp.view.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

@@ -2,6 +2,19 @@ package com.example.secondnewsappmvp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * ArticlesItem class represents the model for API Articles it contains
+ *
+ * @Param publishedAt denotes the time at which news  is publish
+ * @Param author denotes the author of news
+ * @Param urlToImage denotes the news image main url
+ * @Param description denotes the short description of news
+ * @Param source denotes the source of news
+ * @Param title denotes the main heading of news
+ * @Param url denotes the url to external site
+ * @Param content denotes the full content with rest no of characters in content available
+ */
+
 public class ArticlesItem {
 
     @SerializedName("publishedAt")

@@ -4,9 +4,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.secondnewsappmvp.contract.ArticleListContract;
 import com.example.secondnewsappmvp.data.model.ArticlesItem;
-import com.example.secondnewsappmvp.data.model.Response;
+import com.example.secondnewsappmvp.data.response.APIResponse;
+import com.example.secondnewsappmvp.domain.contract.ArticleListContract;
 import com.example.secondnewsappmvp.domain.network.ApiClient;
 import com.example.secondnewsappmvp.domain.network.ApiInterface;
 
@@ -20,21 +20,27 @@ public class ArticleListModel implements ArticleListContract.Model {
     private final String TAG = "Article List Model";
     private final int pageNo = 1;
 
+    /**
+     * Fetch the response from the api and assign to the list of articles
+     *
+     * @param onFinishedListener callback when api fetch is completed
+     * @param pageNo             fetch the current page number
+     */
     @Override
     public void getMovieList(final OnFinishedListener onFinishedListener, int pageNo) {
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-        Call<Response> call = apiService.getPopularMovies();
+        Call<APIResponse> call = apiService.getLatestNews();
 
-        call.enqueue(new Callback<Response>() {
+        call.enqueue(new Callback<APIResponse>() {
             @Override
-            public void onResponse(@NonNull Call<Response> call, @NonNull retrofit2.Response<Response> response) {
+            public void onResponse(@NonNull Call<APIResponse> call, @NonNull retrofit2.Response<APIResponse> response) {
                 assert response.body() != null;
-                List<ArticlesItem> movies = response.body().getArticles();
-                onFinishedListener.onFinished(movies);
+                List<ArticlesItem> articles = response.body().getArticles();
+                onFinishedListener.onFinished(articles);
             }
 
             @Override
-            public void onFailure(@NonNull Call<Response> call, Throwable t) {
+            public void onFailure(@NonNull Call<APIResponse> call, Throwable t) {
                 Log.e(TAG, t.toString());
                 onFinishedListener.onFailure(t);
             }
