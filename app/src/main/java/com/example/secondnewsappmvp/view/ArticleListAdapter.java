@@ -1,5 +1,6 @@
 package com.example.secondnewsappmvp.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,12 +49,14 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         return new MyViewHolder(view, recyclerViewInterface);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (articlesItemList.get(position).getTitle() != null) {
             holder.articleHeading.setText(articlesItemList.get(position).getTitle());
-            holder.articleAuthor.setText(articlesItemList.get(position).getAuthor());
-            holder.articleDescription.setText(articlesItemList.get(position).getContent());
+            holder.articleAuthor.setText("Author: " + articlesItemList.get(position).getAuthor());
+            holder.articleDescription.setText(articlesItemList.get(position).getDescription());
+            holder.articlePostedDate.setText(articlesItemList.get(position).getPublishedAt());
 
             Glide.with(context).load(articlesItemList.get(position).getUrlToImage()).into(holder.articleImage);
 
@@ -61,11 +64,13 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             holder.articleAuthor.setVisibility(View.VISIBLE);
             holder.articleDescription.setVisibility(View.VISIBLE);
             holder.articleImage.setVisibility(View.VISIBLE);
+            holder.articlePostedDate.setVisibility(View.VISIBLE);
         } else {
             holder.articleHeading.setVisibility(View.GONE);
             holder.articleAuthor.setVisibility(View.GONE);
             holder.articleDescription.setVisibility(View.GONE);
             holder.articleImage.setVisibility(View.GONE);
+            holder.articlePostedDate.setVisibility(View.GONE);
         }
     }
 
@@ -76,7 +81,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView articleImage;
-        TextView articleHeading, articleAuthor, articleDescription;
+        TextView articleHeading, articleAuthor, articleDescription, articlePostedDate;
 
         public MyViewHolder(
                 @NonNull View itemView,
@@ -87,15 +92,13 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             articleHeading = itemView.findViewById(R.id.articleHeading);
             articleAuthor = itemView.findViewById(R.id.articleAuthor);
             articleDescription = itemView.findViewById(R.id.articleDescription);
+            articlePostedDate = itemView.findViewById(R.id.date_posted);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (recyclerViewInterface != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            recyclerViewInterface.onItemClick(position);
-                        }
+            itemView.setOnClickListener(view -> {
+                if (recyclerViewInterface != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        recyclerViewInterface.onItemClick(position);
                     }
                 }
             });
