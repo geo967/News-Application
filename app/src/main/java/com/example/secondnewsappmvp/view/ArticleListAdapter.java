@@ -22,8 +22,11 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     private final List<ArticlesItem> articlesItemList;
     private final Context context;
 
-    public ArticleListAdapter(List<ArticlesItem> articlesItemList, Context context,
-                              RecyclerViewInterface recyclerViewInterface) {
+    public ArticleListAdapter(
+            List<ArticlesItem> articlesItemList,
+            Context context,
+            RecyclerViewInterface recyclerViewInterface
+    ) {
         this.articlesItemList = articlesItemList;
         this.context = context;
         this.recyclerViewInterface = recyclerViewInterface;
@@ -31,24 +34,39 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item_movie_list, parent, false);
-
+    public MyViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType
+    ) {
+        View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(
+                        R.layout.item_article_row,
+                        parent,
+                        false
+                );
         return new MyViewHolder(view, recyclerViewInterface);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        if (articlesItemList.get(position).getTitle() != null) {
+            holder.articleHeading.setText(articlesItemList.get(position).getTitle());
+            holder.articleAuthor.setText(articlesItemList.get(position).getAuthor());
+            holder.articleDescription.setText(articlesItemList.get(position).getContent());
 
-        holder.tvMovietitle.setText(articlesItemList.get(position).getTitle());
-        holder.tvReleaseDate.setText(articlesItemList.get(position).getAuthor());
-        holder.tvOverview.setText(articlesItemList.get(position).getContent());
+            Glide.with(context).load(articlesItemList.get(position).getUrlToImage()).into(holder.articleImage);
 
-
-        Glide.with(context).load(articlesItemList.get(position).getUrlToImage()).into(holder.ivMovie);
-
+            holder.articleHeading.setVisibility(View.VISIBLE);
+            holder.articleAuthor.setVisibility(View.VISIBLE);
+            holder.articleDescription.setVisibility(View.VISIBLE);
+            holder.articleImage.setVisibility(View.VISIBLE);
+        } else {
+            holder.articleHeading.setVisibility(View.GONE);
+            holder.articleAuthor.setVisibility(View.GONE);
+            holder.articleDescription.setVisibility(View.GONE);
+            holder.articleImage.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -56,26 +74,25 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         return articlesItemList.size();
     }
 
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView articleImage;
+        TextView articleHeading, articleAuthor, articleDescription;
 
-    public static class MyViewHolder extends  RecyclerView.ViewHolder {
-
-        ImageView ivMovie;
-        TextView tvMovietitle, tvReleaseDate, tvOverview;
-
-        public MyViewHolder(@NonNull View itemView, RecyclerViewInterface recyclerViewInterface) {
+        public MyViewHolder(
+                @NonNull View itemView,
+                RecyclerViewInterface recyclerViewInterface
+        ) {
             super(itemView);
-
-            ivMovie = itemView.findViewById(R.id.ivMovie);
-            tvMovietitle = itemView.findViewById(R.id.tvTitleMovie);
-            tvReleaseDate = itemView.findViewById(R.id.tvReleaseMovie);
-            tvOverview = itemView.findViewById(R.id.tvOverviewMovie);
+            articleImage = itemView.findViewById(R.id.articleImage);
+            articleHeading = itemView.findViewById(R.id.articleHeading);
+            articleAuthor = itemView.findViewById(R.id.articleAuthor);
+            articleDescription = itemView.findViewById(R.id.articleDescription);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (recyclerViewInterface != null) {
                         int position = getAdapterPosition();
-
                         if (position != RecyclerView.NO_POSITION) {
                             recyclerViewInterface.onItemClick(position);
                         }
@@ -84,7 +101,4 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             });
         }
     }
-
-
 }
-

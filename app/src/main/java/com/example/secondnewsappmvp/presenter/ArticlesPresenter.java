@@ -25,45 +25,33 @@ public class ArticlesPresenter implements
 
     @Override
     public void getMoreData(int pageNo) {
-
         if (articleListView != null) {
             articleListView.showProgress();
         }
-
         articleListModel.getMovieList(this, pageNo);
-
     }
 
     @Override
     public void requestDataFromServer() {
-
         if (articleListView != null) {
             articleListView.showProgress();
         }
-
         articleListModel.getMovieList(this, 1);
-
     }
 
     @Override
     public void onFinished(List<ArticlesItem> articleArrayList) {
-
         articleListView.setDataToRecyclerview(articleArrayList);
-
         if (articleListView != null) {
             articleListView.hideProgress();
         }
-
     }
 
     @Override
     public void onFailure(Throwable t) {
-
         articleListView.onResponseFailure(t);
-
         if (articleListView != null) {
             articleListView.hideProgress();
         }
-
     }
 }

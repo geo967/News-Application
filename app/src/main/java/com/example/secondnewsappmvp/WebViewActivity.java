@@ -1,17 +1,26 @@
 package com.example.secondnewsappmvp;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity2 extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity {
 
+    ProgressBar webViewProgressBar;
+
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_webview);
+
+        webViewProgressBar = findViewById(R.id.webViewLoading);
+        webViewProgressBar.setVisibility(View.VISIBLE);
 
         String url = getIntent().getStringExtra("url");
         WebView browser = (WebView) findViewById(R.id.webview);
@@ -23,6 +32,6 @@ public class MainActivity2 extends AppCompatActivity {
         // WebViewClient allows you to handle
         // onPageFinished and override Url loading.
         browser.setWebViewClient(new WebViewClient());
-
+        webViewProgressBar.setVisibility(View.GONE);
     }
 }

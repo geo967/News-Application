@@ -1,21 +1,22 @@
 package com.example.secondnewsappmvp.model;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Response{
+import java.util.List;
 
-	@SerializedName("articles")
-	private List<ArticlesItem> articles;
+public class Response {
 
-	@SerializedName("status")
-	private String status;
+    @SerializedName("articles")
+    private List<ArticlesItem> articles;
 
-	public List<ArticlesItem> getArticles(){
-		return articles;
-	}
+    @SerializedName("status")
+    private String status;
 
-	public String getStatus(){
-		return status;
-	}
+    public List<ArticlesItem> getArticles() {
+        return articles;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }

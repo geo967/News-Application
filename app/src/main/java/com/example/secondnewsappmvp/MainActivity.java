@@ -23,32 +23,36 @@ import com.example.secondnewsappmvp.view.ArticleListAdapter;
 import com.example.secondnewsappmvp.view.RecyclerViewInterface;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ArticleListContract.View, RecyclerViewInterface {
 
-    private RecyclerView rvMovieList;
-    private List<ArticlesItem> movieList;
-    private ProgressBar pbLoading;
+    ArticleListAdapter articleListAdapter;
+    boolean clicked = false;
+    boolean clicked1 = false;
     private Toolbar toolbar;
+    boolean clicked2 = false;
+    private RecyclerView articleRecyclerView;
+    private List<ArticlesItem> articleItems;
+    private ProgressBar articleLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rvMovieList = findViewById(R.id.rvMovieList);
-        pbLoading = findViewById(R.id.pbLoading);
+        articleRecyclerView = findViewById(R.id.articleListRecyclerView);
+        articleLoading = findViewById(R.id.recyclerViewLoading);
 
-        movieList = new ArrayList<>();
+        articleItems = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        rvMovieList.setLayoutManager(layoutManager);
-        rvMovieList.setHasFixedSize(true);
+        articleRecyclerView.setLayoutManager(layoutManager);
+        articleRecyclerView.setHasFixedSize(true);
 
         ArticlesPresenter moviePresenter = new ArticlesPresenter(this);
         moviePresenter.requestDataFromServer();
-
-
     }
 
     @Override
@@ -61,13 +65,32 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (!clicked) {
+            Collections.sort(articleItems, new Comparator<ArticlesItem>() {
+                @Override
+                public int compare(ArticlesItem articlesItem, ArticlesItem t1) {
+                    return articlesItem.getPublishedAt().compareToIgnoreCase(t1.getPublishedAt());
+                }
+            });
+            clicked = true;
+        }
         switch (id) {
             case R.id.item1:
-                Toast.makeText(getApplicationContext(), "Item 1 Selected", Toast.LENGTH_LONG).show();
-                return true;
+                if (!clicked1) {
+                    Toast.makeText(getApplicationContext(), "Old to New", Toast.LENGTH_LONG).show();
+                    Collections.reverse(articleItems);
+                    setDataToRecyclerview(articleItems);
+                    clicked1 = true;
+                    return true;
+                }
             case R.id.item2:
-                Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
-                return true;
+                if (!clicked2) {
+                    Toast.makeText(getApplicationContext(), "New to Old", Toast.LENGTH_LONG).show();
+                    Collections.reverse(articleItems);
+                    setDataToRecyclerview(articleItems);
+                    clicked2 = true;
+                    return true;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -75,36 +98,35 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
 
     @Override
     public void showProgress() {
-        pbLoading.setVisibility(View.VISIBLE);
+        articleLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        pbLoading.setVisibility(View.GONE);
+        articleLoading.setVisibility(View.GONE);
     }
 
     @Override
-    public void setDataToRecyclerview(List<ArticlesItem> movieListArray) {
+    public void setDataToRecyclerview(List<ArticlesItem> articleItemsArray) {
 
-        movieList.addAll(movieListArray);
-        ArticleListAdapter movieListAdapter = new ArticleListAdapter(movieList, MainActivity.this, this);
-        rvMovieList.setAdapter(movieListAdapter);
+        articleItems.addAll(articleItemsArray);
+        articleListAdapter = new ArticleListAdapter(articleItems, MainActivity.this, this);
+        articleRecyclerView.setAdapter(articleListAdapter);
+        articleListAdapter.notifyDataSetChanged();
 
     }
 
     @Override
     public void onResponseFailure(Throwable throwable) {
-
         Log.e("ERROR:", throwable.getMessage());
         Toast.makeText(MainActivity.this, "Error in getting data", Toast.LENGTH_LONG).show();
-
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onItemClick(int position) {
-        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-        intent.putExtra("url", movieList.get(position).getUrl());
+        Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+        intent.putExtra("url", articleItems.get(position).getUrl());
         startActivity(intent);
     }
 }
