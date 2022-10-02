@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp.view;
+package com.example.secondnewsappmvp.view.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.secondnewsappmvp.R;
-import com.example.secondnewsappmvp.model.ArticlesItem;
+import com.example.secondnewsappmvp.data.model.ArticlesItem;
 
 import java.util.List;
 
@@ -58,7 +58,12 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
             holder.articleDescription.setText(articlesItemList.get(position).getDescription());
             holder.articlePostedDate.setText(articlesItemList.get(position).getPublishedAt());
 
-            Glide.with(context).load(articlesItemList.get(position).getUrlToImage()).into(holder.articleImage);
+            Glide.with(context).load(
+                            articlesItemList
+                                    .get(position)
+                                    .getUrlToImage())
+                    .placeholder(R.drawable.news_logo_background)
+                    .into(holder.articleImage);
 
             holder.articleHeading.setVisibility(View.VISIBLE);
             holder.articleAuthor.setVisibility(View.VISIBLE);

@@ -1,8 +1,8 @@
 package com.example.secondnewsappmvp.presenter;
 
 import com.example.secondnewsappmvp.contract.ArticleListContract;
-import com.example.secondnewsappmvp.model.ArticlesItem;
-import com.example.secondnewsappmvp.service.ArticleListModel;
+import com.example.secondnewsappmvp.data.model.ArticlesItem;
+import com.example.secondnewsappmvp.domain.service.ArticleListModel;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.example.secondnewsappmvp.contract;
 
-import com.example.secondnewsappmvp.model.ArticlesItem;
+import com.example.secondnewsappmvp.data.model.ArticlesItem;
 
 import java.util.List;
 

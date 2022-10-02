@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp;
+package com.example.secondnewsappmvp.view.adapter.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,28 +12,29 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.secondnewsappmvp.R;
 import com.example.secondnewsappmvp.contract.ArticleListContract;
-import com.example.secondnewsappmvp.model.ArticlesItem;
+import com.example.secondnewsappmvp.data.model.ArticlesItem;
 import com.example.secondnewsappmvp.presenter.ArticlesPresenter;
-import com.example.secondnewsappmvp.view.ArticleListAdapter;
-import com.example.secondnewsappmvp.view.RecyclerViewInterface;
+import com.example.secondnewsappmvp.view.adapter.ArticleListAdapter;
+import com.example.secondnewsappmvp.view.adapter.RecyclerViewInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ArticleListContract.View, RecyclerViewInterface {
+public class MainActivity extends
+        AppCompatActivity implements
+        ArticleListContract.View, RecyclerViewInterface {
 
     ArticleListAdapter articleListAdapter;
-    boolean clicked = false;
-    boolean clicked1 = false;
-    private Toolbar toolbar;
-    boolean clicked2 = false;
+    boolean onClickedMenuIcon = false;
+    boolean onClickedOldToNew = false;
+    boolean onClickedNewToOld = false;
     private RecyclerView articleRecyclerView;
     private List<ArticlesItem> articleItems;
     private ProgressBar articleLoading;
@@ -62,33 +63,36 @@ public class MainActivity extends AppCompatActivity implements ArticleListContra
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (!clicked) {
+        if (!onClickedMenuIcon) {
             Collections.sort(articleItems, new Comparator<ArticlesItem>() {
                 @Override
                 public int compare(ArticlesItem articlesItem, ArticlesItem t1) {
                     return articlesItem.getPublishedAt().compareToIgnoreCase(t1.getPublishedAt());
                 }
             });
-            clicked = true;
+            onClickedMenuIcon = true;
         }
         switch (id) {
             case R.id.item1:
-                if (!clicked1) {
+                if (!onClickedOldToNew) {
                     Toast.makeText(getApplicationContext(), "Old to New", Toast.LENGTH_LONG).show();
                     Collections.reverse(articleItems);
                     setDataToRecyclerview(articleItems);
-                    clicked1 = true;
+                    onClickedOldToNew = true;
+                    onClickedNewToOld = false;
                     return true;
                 }
             case R.id.item2:
-                if (!clicked2) {
+                if (!onClickedNewToOld) {
                     Toast.makeText(getApplicationContext(), "New to Old", Toast.LENGTH_LONG).show();
                     Collections.reverse(articleItems);
                     setDataToRecyclerview(articleItems);
-                    clicked2 = true;
+                    onClickedNewToOld = true;
+                    onClickedOldToNew = false;
                     return true;
                 }
             default:

@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp.network;
+package com.example.secondnewsappmvp.domain.network;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -1,14 +1,14 @@
-package com.example.secondnewsappmvp.service;
+package com.example.secondnewsappmvp.domain.service;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.secondnewsappmvp.contract.ArticleListContract;
-import com.example.secondnewsappmvp.model.ArticlesItem;
-import com.example.secondnewsappmvp.model.Response;
-import com.example.secondnewsappmvp.network.ApiClient;
-import com.example.secondnewsappmvp.network.ApiInterface;
+import com.example.secondnewsappmvp.data.model.ArticlesItem;
+import com.example.secondnewsappmvp.data.model.Response;
+import com.example.secondnewsappmvp.domain.network.ApiClient;
+import com.example.secondnewsappmvp.domain.network.ApiInterface;
 
 import java.util.List;
 

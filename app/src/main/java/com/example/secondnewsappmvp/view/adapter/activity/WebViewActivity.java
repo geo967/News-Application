@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp;
+package com.example.secondnewsappmvp.view.adapter.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.secondnewsappmvp.R;
 
 public class WebViewActivity extends AppCompatActivity {
 

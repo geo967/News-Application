@@ -1,4 +1,4 @@
-package com.example.secondnewsappmvp.model;
+package com.example.secondnewsappmvp.data.model;
 
 import com.google.gson.annotations.SerializedName;
 
